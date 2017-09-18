@@ -13,7 +13,11 @@ in order to parse through the LMS webpages.
 
 Currently being worked on by [Jacob Lane](https://github.com/Jacob-Lane), [Colin Atkinson](https://github.com/colatkinson), Chris Veccio, [Mark Robinson](https://github.com/robinm8), and [Adeet Phanse](https://github.com/phansa).
 
-[Original version](https://github.com/slegec/LMS_Grabber) by [Craig Slegel](https://github.com/slegec). 
+[Original version](https://github.com/slegec/LMS_Grabber) by [Craig Slegel](https://github.com/slegec).
+
+[ROCS Page](https://rcos.io/projects/lmsgrabber/lmsgrabber/profile)
+
+[Project Proposal](https://docs.google.com/document/d/1mH3wLj47g_p2EAp7WzXIFjUDSW9V1Nxjk6Tze5JMY5Q/edit#heading=h.9ajot3xyko3z)
 
 
 
