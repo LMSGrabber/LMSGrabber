@@ -6,13 +6,13 @@ package rpi.lmsgrabber;
  */
 public class App {
 
-	public App() {
-		LmsGrab grabber = new LmsGrab();
-		grabber.grab();
-	}
-	
-	public static void main(String[] args) {
-		new App();
-	}
-	
+  public App() {
+    BlackboardGrab grabber = new BlackboardGrab();
+    grabber.grab();
+  }
+
+  public static void main(String[] args) {
+    new App();
+  }
+
 }
