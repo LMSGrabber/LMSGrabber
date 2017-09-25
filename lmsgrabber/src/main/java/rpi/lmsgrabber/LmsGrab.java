@@ -15,29 +15,18 @@ import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
 import io.ddavison.conductor.Locomotive;
 
-@Config(browser = Browser.CHROME, url = "https://lms.rpi.edu")
-public class LmsGrab extends Locomotive {
-	
+
+public class LmsGrab extends GenericGrabber {
 	public void grab()
 	{
-		login_lms();
-
-		getCourseInformation();
+		base_url = "https://lms.rpi.edu";
+		login();
+		getCourseListings();
 		// driver.close();
 	}
 	
-	public void getCourseInformation()
+	public String[] getUserCredentials()
 	{
-		//From the home page, retrieve all links to current courses
-		WebElement simpleTable = waitForElement(By.xpath("//*[@id=\"_3_1termCourses_noterm\"]/ul"));
-		List<WebElement> rows = simpleTable.findElements(By.tagName("a"));
-		for (WebElement r : rows) {
-			System.out.println(r.getText());
-		}
-	}
-
-	// Get through the login page
-	public void login_lms() {
 		JPanel panel = new JPanel();
 		JLabel pwlabel = new JLabel("Enter a password:");
 		JLabel unlabel = new JLabel("Enter a username:");
@@ -55,11 +44,41 @@ public class LmsGrab extends Locomotive {
 		// TODO adjust layout to have username and password fields appropriately sized
 		// TODO check for login failures
 		if (selected == 0) {
-			setText(By.name("user_id"), username.getText()).setText(By.name("password"), new String(pass.getPassword()))
-					.click(By.id("entry-login"));
+			return new String[] {username.getText(), new String(pass.getPassword())};
 		} else {
-			System.err.println("Error, user canceled login. Need to handle this more gracefully.");
+			System.err.println("Error, user canceled login.");
+			return null;
+		}			
+	}
+
+	@Override
+	public void login() {
+		driver.navigate().to(base_url);
+
+		//Get user credentials, retry while invalid
+		String[] cred = null;
+		
+		while(cred == null)
+		{
+			cred = getUserCredentials();
 		}
+		
+		setText(By.name("user_id"), cred[0]).setText(By.name("password"), cred[1])
+		.click(By.id("entry-login"));		
+	}
+
+	@Override
+	public CourseListing[] getCourseListings() {
+		//From the home page, retrieve all links to current courses
+		WebElement simpleTable = waitForElement(By.xpath("//*[@id=\"_3_1termCourses_noterm\"]/ul"));
+		List<WebElement> rows = simpleTable.findElements(By.tagName("a"));
+		CourseListing[] cls = new CourseListing[rows.size()];
+		for (int i = 0; i < rows.size(); i++) {
+			System.out.println(rows.get(i).getText());
+			cls[i] = new CourseListing();
+			cls[i].course_name = rows.get(i).getText();
+		}
+		return cls;
 	}
 
 }
