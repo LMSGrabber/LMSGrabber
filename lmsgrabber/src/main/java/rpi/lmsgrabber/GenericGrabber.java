@@ -1,5 +1,6 @@
 package rpi.lmsgrabber;
 
+import com.google.gson.Gson;
 import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
 import io.ddavison.conductor.Locomotive;
@@ -26,4 +27,10 @@ class CourseListing {
   String course_name; // General name of course
   String course_id; // ID of course
   String course_registration_id; // Registration ID of course
+
+  @Override
+  public String toString() {
+    Gson gson = new Gson();
+    return gson.toJson(this);
+  }
 }
