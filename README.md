@@ -30,8 +30,6 @@ Currently being worked on by [Jacob Lane](https://github.com/Jacob-Lane), [Colin
 
 * Firefox web browser (Can be ported for other browsers)
 
-
-
 ### Other notes ###
 
 * Only been tested on Windows 7 64bit
@@ -40,7 +38,12 @@ Currently being worked on by [Jacob Lane](https://github.com/Jacob-Lane), [Colin
 
 * If running from outside of the RPI campus, LMS may require a VPN. See [here](http://dotcio.rpi.edu/services/network-remote-access/vpn-connection-and-installation) for more details.
 
+### Installation Instructions ###
 
+| Tool | Instructions |
+| --- | --- |
+| Eclipse |<ul><li>Download <a href="https://www.eclipse.org/downloads/">Eclipse</a></li><li>Download <a href="https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml">Google Style Guide</a> (ctrl+s)</li><li>Install Eclipse for your platform</li><li>Install Google Style Guide <ul><li>Under `Window/Preferences`, select `Java/Code Style/Formatter`</li><li>Import the settings file by selecting `Import`</li></ul></li></ul>|
+| IntelliJ |<ul><li>Download <a href="https://www.jetbrains.com/idea/download/">IntelliJ</a></li><li>Download <a href="https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml">Google Style Guide</a> (ctrl+s)</li><li>Install IntelliJ for your platform</li><li>Install Google Style Guide <ul><li>Windows <ul><li>Copy the XML file into your `config/codestyles` directory located in the IntelliJ home directory</li><li>Under `Settings -> Editor -> Code Style`, select the `google-styleguide` as current code style</li></ul></li><li>Mac <ul><li>Under `Preferences -> Editor -> Code Style`, select `Manage`</li><li>Import the downloaded style settings file</li><li>Select `GoogleStyle` as the new coding style</li></ul></li></ul></li></ul>|
 
 ### How to use ###
 
