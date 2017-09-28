@@ -8,9 +8,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import io.ddavison.conductor.Browser;
-import io.ddavison.conductor.Config;
-import io.ddavison.conductor.Locomotive;
 
 public class BlackboardGrab extends GenericGrabber {
   public void grab() {
@@ -63,13 +60,22 @@ public class BlackboardGrab extends GenericGrabber {
   @Override
   public CourseListing[] getCourseListings() {
     // From the home page, retrieve all links to current courses
+    // We also need to remove any links present in the course data block to prevent announcements
+    // from being interpreted as classes
     WebElement simpleTable = waitForElement(By.xpath("//*[@id=\"_3_1termCourses_noterm\"]/ul"));
-    List<WebElement> rows = simpleTable.findElements(By.tagName("a"));
-    CourseListing[] cls = new CourseListing[rows.size()];
-    for (int i = 0; i < rows.size(); i++) {
-      System.out.println(rows.get(i).getText());
+    List<WebElement> links = simpleTable.findElements(By.tagName("a"));
+    List<WebElement> courseDataBlocks = simpleTable.findElements(By.className("courseDataBlock"));
+    for (WebElement we : courseDataBlocks) {
+      links.removeAll(we.findElements(By.tagName("a")));
+    }
+
+    CourseListing[] cls = new CourseListing[links.size()];
+    for (int i = 0; i < links.size(); i++) {
       cls[i] = new CourseListing();
-      cls[i].course_name = rows.get(i).getText();
+      cls[i].course_name = links.get(i).getText();
+      System.out.println(links.get(i).getAttribute("href"));
+      cls[i].base_url = links.get(i).getAttribute("href");
+      System.out.println(cls[i]);
     }
     return cls;
   }
