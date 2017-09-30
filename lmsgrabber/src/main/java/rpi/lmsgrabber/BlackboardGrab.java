@@ -1,6 +1,12 @@
 package rpi.lmsgrabber;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -8,13 +14,25 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import com.github.axet.wget.WGet;
 
 public class BlackboardGrab extends GenericGrabber {
+  
   public void grab() {
     base_url = "https://lms.rpi.edu";
-    login();
-    getCourseListings();
+    try
+    {
+      login();
+    for(CourseListing cl : getCourseListings())
+    {
+      getCourseContent(cl);
+    }
     // driver.close();
+    }
+    catch(MalformedURLException murl)
+    {
+      murl.printStackTrace();
+    }
   }
 
   public String[] getUserCredentials() {
@@ -43,7 +61,7 @@ public class BlackboardGrab extends GenericGrabber {
   }
 
   @Override
-  public void login() {
+  public void login() throws MalformedURLException {
     driver.navigate().to(base_url);
 
     // Get user credentials, retry while invalid
@@ -56,9 +74,52 @@ public class BlackboardGrab extends GenericGrabber {
     setText(By.name("user_id"), cred[0]).setText(By.name("password"), cred[1])
         .click(By.id("entry-login"));
   }
+  
+  public void getCourseContent(CourseListing cl) throws MalformedURLException
+  {
+    cl.to_visit.add(cl.base_url);
+    //TODO Temporary lazy solution: Just say we already visited the logout page
+    //TODO need to remove cycles that involve URL modifiers
+    cl.previously_visited.add("https://lms.rpi.edu/webapps/login/?action=logout");
+    while(!cl.to_visit.isEmpty())
+    {
+      String current = cl.to_visit.iterator().next();    //Current URL
+      URL curl = new URL(current);
+      cl.to_visit.remove(current);
+      cl.previously_visited.add(current);
+      
+      //Only get links off of host pages, and download the others
+      if(curl.getHost().equals(cl.getURL().getHost()))
+      {
+        System.out.println("Attempting to get links on " + curl);
+
+        driver.navigate().to(curl);
+        //Get all links
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        Set<String> links_str = new HashSet<String>();
+        for(WebElement we : links)
+        {
+          String href = we.getAttribute("href");
+          if ((href != null) && !href.startsWith("javascript")) {
+            links_str.add(href);
+          }
+        }
+        //Remove all that have already been visited
+        links_str.removeAll(cl.previously_visited);
+        cl.to_visit.addAll(links_str);
+      }
+      else
+      {
+        System.out.println("Attempting to dl " + curl);
+        driver.navigate().to(curl);
+      }
+    }
+//    WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
+//    wget.download();
+  }
 
   @Override
-  public CourseListing[] getCourseListings() {
+  public CourseListing[] getCourseListings() throws MalformedURLException {
     // From the home page, retrieve all links to current courses
     // We also need to remove any links present in the course data block to prevent announcements
     // from being interpreted as classes
@@ -73,9 +134,7 @@ public class BlackboardGrab extends GenericGrabber {
     for (int i = 0; i < links.size(); i++) {
       cls[i] = new CourseListing();
       cls[i].course_name = links.get(i).getText();
-      System.out.println(links.get(i).getAttribute("href"));
       cls[i].base_url = links.get(i).getAttribute("href");
-      System.out.println(cls[i]);
     }
     return cls;
   }
