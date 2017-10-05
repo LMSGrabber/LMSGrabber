@@ -35,6 +35,18 @@ public class BlackboardGrab extends GenericGrabber {
     }
   }
 
+  public void grab(String username, String password) {
+    base_url = "https://lms.rpi.edu";
+    login(username, password);
+    getCourseListings();
+  }
+
+  private void login(String username, String password) {
+    driver.navigate().to(base_url);
+    setText(By.name("user_id"), username).setText(By.name("password"), password)
+        .click(By.id("entry-login"));
+  }
+
   public String[] getUserCredentials() {
     JPanel panel = new JPanel();
     JLabel pwlabel = new JLabel("Enter a password:");
@@ -56,6 +68,7 @@ public class BlackboardGrab extends GenericGrabber {
       return new String[] {username.getText(), new String(pass.getPassword())};
     } else {
       System.err.println("Error, user canceled login.");
+      System.exit(0);
       return null;
     }
   }
