@@ -1,9 +1,7 @@
 package rpi.lmsgrabber;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,31 +12,33 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import com.github.axet.wget.WGet;
 
 public class BlackboardGrab extends GenericGrabber {
-  
+
   public void grab() {
     base_url = "https://lms.rpi.edu";
-    try
-    {
+    try {
       login();
-    for(CourseListing cl : getCourseListings())
-    {
-      getCourseContent(cl);
-    }
-    // driver.close();
-    }
-    catch(MalformedURLException murl)
-    {
+      for (CourseListing cl : getCourseListings()) {
+        getCourseContent(cl);
+      }
+    } catch (MalformedURLException murl) {
       murl.printStackTrace();
     }
+    driver.close();
   }
 
   public void grab(String username, String password) {
     base_url = "https://lms.rpi.edu";
-    login(username, password);
-    getCourseListings();
+    try {
+      login(username, password);
+      for (CourseListing cl : getCourseListings()) {
+        getCourseContent(cl);
+      }
+    } catch (MalformedURLException murl) {
+      murl.printStackTrace();
+    }
+    driver.close();
   }
 
   private void login(String username, String password) {
@@ -68,6 +68,7 @@ public class BlackboardGrab extends GenericGrabber {
       return new String[] {username.getText(), new String(pass.getPassword())};
     } else {
       System.err.println("Error, user canceled login.");
+      driver.close();
       System.exit(0);
       return null;
     }
@@ -87,48 +88,42 @@ public class BlackboardGrab extends GenericGrabber {
     setText(By.name("user_id"), cred[0]).setText(By.name("password"), cred[1])
         .click(By.id("entry-login"));
   }
-  
-  public void getCourseContent(CourseListing cl) throws MalformedURLException
-  {
+
+  public void getCourseContent(CourseListing cl) throws MalformedURLException {
     cl.to_visit.add(cl.base_url);
-    //TODO Temporary lazy solution: Just say we already visited the logout page
-    //TODO need to remove cycles that involve URL modifiers
+    // TODO Temporary lazy solution: Just say we already visited the logout page
+    // TODO need to remove cycles that involve URL modifiers
     cl.previously_visited.add("https://lms.rpi.edu/webapps/login/?action=logout");
-    while(!cl.to_visit.isEmpty())
-    {
-      String current = cl.to_visit.iterator().next();    //Current URL
+    while (!cl.to_visit.isEmpty()) {
+      String current = cl.to_visit.iterator().next(); // Current URL
       URL curl = new URL(current);
       cl.to_visit.remove(current);
       cl.previously_visited.add(current);
-      
-      //Only get links off of host pages, and download the others
-      if(curl.getHost().equals(cl.getURL().getHost()))
-      {
+
+      // Only get links off of host pages, and download the others
+      if (curl.getHost().equals(cl.getURL().getHost())) {
         System.out.println("Attempting to get links on " + curl);
 
         driver.navigate().to(curl);
-        //Get all links
+        // Get all links
         List<WebElement> links = driver.findElements(By.tagName("a"));
         Set<String> links_str = new HashSet<String>();
-        for(WebElement we : links)
-        {
+        for (WebElement we : links) {
           String href = we.getAttribute("href");
           if ((href != null) && !href.startsWith("javascript")) {
             links_str.add(href);
           }
         }
-        //Remove all that have already been visited
+        // Remove all that have already been visited
         links_str.removeAll(cl.previously_visited);
         cl.to_visit.addAll(links_str);
-      }
-      else
-      {
+      } else {
         System.out.println("Attempting to dl " + curl);
         driver.navigate().to(curl);
       }
     }
-//    WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
-//    wget.download();
+    // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
+    // wget.download();
   }
 
   @Override
