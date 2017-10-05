@@ -49,6 +49,7 @@ Currently being worked on by [Jacob Lane](https://github.com/Jacob-Lane), [Colin
 Clone the project then in eclipse click file -> import -> maven -> existing maven
 project. For root directory click the LMSGrabber folder and then press finish.
 
+
 ### How to use ###
 
 
@@ -89,7 +90,8 @@ it is this:
 * Comments above the line
 
 
-### Contributing ###
+
+### Contributor Code of Conduct ###
 In order to contribute to our project first clone the project locally and install
 it, commit any changes you wnat to make then open a Pull Request to our master branch.
 Somoene will review your changes and get back to you. We will use Github Issues to 
