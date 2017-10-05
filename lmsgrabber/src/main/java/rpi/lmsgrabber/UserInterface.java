@@ -32,7 +32,7 @@ public class UserInterface extends Application {
     grid.setVgap(10);
     grid.setPadding(new Insets(25, 25, 25, 25));
 
-    Text scenetitle = new Text("Welcome");
+    Text scenetitle = new Text("Welcome to LMS Grabber. \nPlease log in!");
     scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
     grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -50,7 +50,7 @@ public class UserInterface extends Application {
 
     Button btn = new Button("Sign in");
     HBox hbBtn = new HBox(10);
-    hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+    hbBtn.setAlignment(Pos.BOTTOM_CENTER);
     hbBtn.getChildren().add(btn);
     grid.add(hbBtn, 1, 4);
 
