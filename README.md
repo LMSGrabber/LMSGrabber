@@ -85,9 +85,10 @@ it is this:
 * Comments above the line
 
 
-### Contributor Code of Conduct ###
+### Contributing ###
 In order to contribute to our project first clone the project locally and install
 it, commit any changes you wnat to make then open a Pull Request to our master branch.
 Somoene will review your changes and get back to you. We will use Github Issues to 
 track issues and if you feel like you can solve any of them feel free to leave a comment
-on the issue so that if we know what files to look at we can help you. 
+on the issue so that if we know what files to look at we can help you. Make sure to
+follow our style guide as well.
