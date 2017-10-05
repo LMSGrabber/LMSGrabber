@@ -13,7 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,13 +39,13 @@ public class UserInterface extends Application {
     Label userName = new Label("User Name:");
     grid.add(userName, 0, 1);
 
-    TextField userTextField = new TextField();
+    final TextField userTextField = new TextField();
     grid.add(userTextField, 1, 1);
 
     Label pw = new Label("Password:");
     grid.add(pw, 0, 2);
 
-    PasswordField pwBox = new PasswordField();
+    final PasswordField pwBox = new PasswordField();
     grid.add(pwBox, 1, 2);
 
     Button btn = new Button("Sign in");
@@ -64,8 +63,8 @@ public class UserInterface extends Application {
     btn.setOnAction(new EventHandler<ActionEvent>() {
 
       public void handle(ActionEvent e) {
-        actiontarget.setFill(Color.FIREBRICK);
-        actiontarget.setText("Sign in button pressed");
+        BlackboardGrab grabber = new BlackboardGrab();
+        grabber.grab(userTextField.getText(), pwBox.getText());
       }
     });
 
