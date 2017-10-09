@@ -20,9 +20,9 @@ import io.ddavison.conductor.Locomotive;
 public abstract class GenericGrabber extends Locomotive {
   public String base_url;
 
-  public abstract void grab(); // Gets all files
+  public abstract void grab() throws MalformedURLException; // Gets all files
 
-  public abstract void login() throws MalformedURLException; // Logs in to website
+  public abstract void login(String username, String password) throws MalformedURLException; // Logs in to website
 
   public abstract CourseListing[] getCourseListings() throws MalformedURLException; // Gets a list of all courses on this website
 

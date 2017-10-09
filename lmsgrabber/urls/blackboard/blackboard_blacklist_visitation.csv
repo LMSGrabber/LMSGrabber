@@ -1,0 +1,12 @@
+query,?action=logout
+onhost,/webapps/blackboard/execute/personalInfo
+onhost,/webapps/blackboard/execute/editUser
+onhost,/webapps/blackboard/execute/userChangePassword
+onhost,/webapps/blackboard/execute/myPlacesSettings
+onhost,/webapps/blackboard/execute/userPrivacy
+onhost,/webapps/blackboard/execute/personalSettings
+onhost,/webapps/blackboard/execute/nautilus/notificationSettingsCaret
+onhost,/webapps/blackboard/execute/nautilus/displayNotificationSettings
+onhost,/webapps/portal/execute/tabs/tabManageModules
+external,rpinfo.rpi.edu
+onhost,/webapps/portal/execute/tabs/tabCustomization

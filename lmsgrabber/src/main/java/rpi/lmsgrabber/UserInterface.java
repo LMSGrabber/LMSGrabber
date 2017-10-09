@@ -1,6 +1,7 @@
 package rpi.lmsgrabber;
 
 import static javafx.geometry.HPos.RIGHT;
+import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,7 +65,13 @@ public class UserInterface extends Application {
 
       public void handle(ActionEvent e) {
         BlackboardGrab grabber = new BlackboardGrab();
-        grabber.grab(userTextField.getText(), pwBox.getText());
+        try {
+          grabber.login(userTextField.getText(), pwBox.getText());
+          grabber.grab();
+        } catch (MalformedURLException e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
+        }
       }
     });
 

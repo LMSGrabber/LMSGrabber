@@ -15,10 +15,9 @@ import org.openqa.selenium.WebElement;
 
 public class BlackboardGrab extends GenericGrabber {
 
-  public void grab() {
+  public void grab() throws MalformedURLException {
     base_url = "https://lms.rpi.edu";
     try {
-      login();
       for (CourseListing cl : getCourseListings()) {
         getCourseContent(cl);
       }
@@ -28,20 +27,7 @@ public class BlackboardGrab extends GenericGrabber {
     driver.close();
   }
 
-  public void grab(String username, String password) {
-    base_url = "https://lms.rpi.edu";
-    try {
-      login(username, password);
-      for (CourseListing cl : getCourseListings()) {
-        getCourseContent(cl);
-      }
-    } catch (MalformedURLException murl) {
-      murl.printStackTrace();
-    }
-    driver.close();
-  }
-
-  private void login(String username, String password) {
+  public void login(String username, String password) throws MalformedURLException {
     driver.navigate().to(base_url);
     setText(By.name("user_id"), username).setText(By.name("password"), password)
         .click(By.id("entry-login"));
@@ -72,21 +58,6 @@ public class BlackboardGrab extends GenericGrabber {
       System.exit(0);
       return null;
     }
-  }
-
-  @Override
-  public void login() throws MalformedURLException {
-    driver.navigate().to(base_url);
-
-    // Get user credentials, retry while invalid
-    String[] cred = null;
-
-    while (cred == null) {
-      cred = getUserCredentials();
-    }
-
-    setText(By.name("user_id"), cred[0]).setText(By.name("password"), cred[1])
-        .click(By.id("entry-login"));
   }
 
   public void getCourseContent(CourseListing cl) throws MalformedURLException {
