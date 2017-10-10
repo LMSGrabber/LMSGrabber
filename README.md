@@ -1,5 +1,11 @@
 # LMS Grabber #
 
+
+[![Build Status](https://img.shields.io/travis/LMSGrabber/LMSGrabber/master.svg)](https://travis-ci.org/LMSGrabber/LMSGrabber)
+[![Code Climate](https://img.shields.io/codeclimate/coverage/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
+[![Code Climate](https://img.shields.io/codeclimate/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
+[![Code Climate](https://img.shields.io/codeclimate/issues/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
+
 ## Overview ##
 
 This program is designed to create offline archives of various Learning Management Systems (LMS). It is created as a part of the [Rensselaer Center for Open Source](https://rcos.io/projects/lmsgrabber/lmsgrabber/profile) and [Software Design and Documentation](https://sites.google.com/site/rpisdd/) courses.
