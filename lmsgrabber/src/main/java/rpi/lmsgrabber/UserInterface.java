@@ -1,6 +1,7 @@
 package rpi.lmsgrabber;
 
 import static javafx.geometry.HPos.RIGHT;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -22,11 +23,21 @@ import javafx.stage.Stage;
 // Based on login code from -
 // http://docs.oracle.com/javase/8/javafx/get-started-tutorial/form.htm#BABDDGEE
 
+@SuppressWarnings("restriction")
 public class UserInterface extends Application {
 
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("LMS Grabber");
+
+    final BlackboardGrab grabber = new BlackboardGrab();
+    try {
+      grabber.loadSettings();
+    } catch (IOException e2) {
+      e2.printStackTrace();
+    }
+
+
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -64,12 +75,10 @@ public class UserInterface extends Application {
     btn.setOnAction(new EventHandler<ActionEvent>() {
 
       public void handle(ActionEvent e) {
-        BlackboardGrab grabber = new BlackboardGrab();
         try {
           grabber.login(userTextField.getText(), pwBox.getText());
           grabber.grab();
         } catch (MalformedURLException e1) {
-          // TODO Auto-generated catch block
           e1.printStackTrace();
         }
       }

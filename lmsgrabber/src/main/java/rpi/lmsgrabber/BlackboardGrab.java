@@ -1,15 +1,14 @@
 package rpi.lmsgrabber;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,7 +17,7 @@ public class BlackboardGrab extends GenericGrabber {
   public void grab() throws MalformedURLException {
     base_url = "https://lms.rpi.edu";
     try {
-      for (CourseListing cl : getCourseListings()) {
+      for (Course cl : getCourseListings()) {
         getCourseContent(cl);
       }
     } catch (MalformedURLException murl) {
@@ -33,34 +32,7 @@ public class BlackboardGrab extends GenericGrabber {
         .click(By.id("entry-login"));
   }
 
-  public String[] getUserCredentials() {
-    JPanel panel = new JPanel();
-    JLabel pwlabel = new JLabel("Enter a password:");
-    JLabel unlabel = new JLabel("Enter a username:");
-    JPasswordField pass = new JPasswordField(50);
-    JTextField username = new JTextField(50);
-
-    panel.add(unlabel);
-    panel.add(username);
-    panel.add(pwlabel);
-    panel.add(pass);
-    String[] options = new String[] {"OK", "Cancel"};
-    int selected = JOptionPane.showOptionDialog(null, panel, "Enter LMS credentials",
-        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, username);
-    // TODO submit on enter as well as "OK"
-    // TODO adjust layout to have username and password fields appropriately sized
-    // TODO check for login failures
-    if (selected == 0) {
-      return new String[] {username.getText(), new String(pass.getPassword())};
-    } else {
-      System.err.println("Error, user canceled login.");
-      driver.close();
-      System.exit(0);
-      return null;
-    }
-  }
-
-  public void getCourseContent(CourseListing cl) throws MalformedURLException {
+  public void getCourseContent(Course cl) throws MalformedURLException {
     cl.to_visit.add(cl.base_url);
     // TODO Temporary lazy solution: Just say we already visited the logout page
     // TODO need to remove cycles that involve URL modifiers
@@ -98,7 +70,7 @@ public class BlackboardGrab extends GenericGrabber {
   }
 
   @Override
-  public CourseListing[] getCourseListings() throws MalformedURLException {
+  public Course[] getCourseListings() throws MalformedURLException {
     // From the home page, retrieve all links to current courses
     // We also need to remove any links present in the course data block to prevent announcements
     // from being interpreted as classes
@@ -109,13 +81,21 @@ public class BlackboardGrab extends GenericGrabber {
       links.removeAll(we.findElements(By.tagName("a")));
     }
 
-    CourseListing[] cls = new CourseListing[links.size()];
+    Course[] cls = new Course[links.size()];
     for (int i = 0; i < links.size(); i++) {
-      cls[i] = new CourseListing();
+      cls[i] = new Course();
       cls[i].course_name = links.get(i).getText();
       cls[i].base_url = links.get(i).getAttribute("href");
     }
     return cls;
+  }
+
+  @Override
+  public void loadSettings() throws IOException {
+    File settings = new File("urls\\blackboard.csv");
+    urlComp = new UrlComparator(
+        CSVParser.parse(settings, java.nio.charset.StandardCharsets.UTF_8, CSVFormat.DEFAULT),
+        base_url);
   }
 
 }
