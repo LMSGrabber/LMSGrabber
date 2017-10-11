@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 
 public class BlackboardGrab extends GenericGrabber {
 
+  @Override
   public void grab() {
     base_url = "https://lms.rpi.edu";
     try {
