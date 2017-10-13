@@ -1,14 +1,7 @@
 package rpi.lmsgrabber;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import com.google.gson.Gson;
@@ -24,9 +17,13 @@ public abstract class GenericGrabber extends Locomotive {
 
   public abstract void login() throws MalformedURLException; // Logs in to website
 
-  public abstract CourseListing[] getCourseListings() throws MalformedURLException; // Gets a list of all courses on this website
+  public abstract CourseListing[] getCourseListings() throws MalformedURLException; // Gets a list
+                                                                                    // of all
+                                                                                    // courses on
+                                                                                    // this website
 
 }
+
 
 class CourseListing {
   String base_url; // URL of page that the COURSE is located on
@@ -38,14 +35,13 @@ class CourseListing {
   String course_name; // General name of course
   String course_id; // ID of course
   String course_registration_id; // Registration ID of course
-  
-  //Essentially treat the site as a graph
-  //We need to visit all nodes, and their neighbors, while avoiding cycles.
+
+  // Essentially treat the site as a graph
+  // We need to visit all nodes, and their neighbors, while avoiding cycles.
   Set<String> previously_visited = new HashSet<String>();
   Set<String> to_visit = new HashSet<String>();
-  
-  public URL getURL()
-  {
+
+  public URL getURL() {
     try {
       return new URL(base_url);
     } catch (MalformedURLException e) {
