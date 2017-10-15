@@ -1,0 +1,15 @@
+sudo: false # faster builds
+
+language: java
+jdk: oraclejdk8
+
+before_script: cd LMSGrabber
+
+script: mvn clean install cobertura:cobertura -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+cache:
+  directories:
+  - $HOME/.m2
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

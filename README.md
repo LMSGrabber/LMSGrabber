@@ -2,7 +2,7 @@
 
 
 [![Build Status](https://img.shields.io/travis/LMSGrabber/LMSGrabber/master.svg)](https://travis-ci.org/LMSGrabber/LMSGrabber)
-[![Code Climate](https://img.shields.io/codeclimate/coverage/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
+[![Codecov](https://img.shields.io/codecov/c/github/LMSGrabber/LMSGrabber.svg)](https://codecov.io/gh/LMSGrabber/LMSGrabber/)
 [![Code Climate](https://img.shields.io/codeclimate/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
 [![Code Climate](https://img.shields.io/codeclimate/issues/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
 
