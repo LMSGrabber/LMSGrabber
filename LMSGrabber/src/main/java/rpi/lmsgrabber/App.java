@@ -17,7 +17,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 @SuppressWarnings("restriction")
-public class UserInterface extends Application {
+public class App extends Application {
 
   private Stage primaryStage;
   private Pane rootLayout;
