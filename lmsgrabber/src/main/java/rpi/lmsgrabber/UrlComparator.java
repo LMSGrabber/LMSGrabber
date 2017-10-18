@@ -1,14 +1,18 @@
 package rpi.lmsgrabber;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 
 public class UrlComparator {
 
@@ -54,6 +58,9 @@ public class UrlComparator {
     // - Equivalent to anything on the external blacklist
     // - Contains any blacklisted query string
     // - Equivalent to anything on host blacklisted
+    
+    //Check external blacklist
+    
     return false;
   }
 
@@ -85,11 +92,48 @@ public class UrlComparator {
   }
 
   public boolean isEquivalent(String a, String b) {
-    // TODO
     // Need to check:
-    // - All non-blacklisted query strings are equivalent
+    // - All non-blacklisted query strings are equivalent TODO
     // - Same host
     // - Same path
+    
+    URI u1 = null;
+    URI u2 = null;
+    try {
+      u1 = new URI(a);
+      u2 = new URI(b);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+      return false;
+    }
+    
+    //Get host equivalence
+    if(u1.getHost().equals(u2.getHost()))
+    {
+      //Get path equivalence
+      if(u1.getPath().equals(u2.getPath()))
+      {
+        //Get query string rough equivalence
+        List<NameValuePair> q1 = URLEncodedUtils.parse(u1, java.nio.charset.StandardCharsets.UTF_8);
+        List<NameValuePair> q2 = URLEncodedUtils.parse(u1, java.nio.charset.StandardCharsets.UTF_8);
+        
+        //TODO remove ignored query strings, then compare for list equivalence
+
+        for (NameValuePair param : q1) {
+          System.out.println(param.getName() + " : " + param.getValue());
+        }          
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else
+    {
+      return false;
+    }
+    
+    
     return false;
   }
 

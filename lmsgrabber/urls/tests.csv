@@ -1,0 +1,12 @@
+query_blacklist,?action=logout
+onhost_blacklist,/webapps/blackboard/execute/personalInfo
+onhost_blacklist,/webapps/blackboard/execute/editUser
+onhost_blacklist,/webapps/blackboard/execute/userChangePassword
+onhost_blacklist,/webapps/blackboard/execute/myPlacesSettings
+onhost_blacklist,/webapps/blackboard/execute/userPrivacy
+onhost_blacklist,/webapps/blackboard/execute/personalSettings
+onhost_blacklist,/webapps/blackboard/execute/nautilus/notificationSettingsCaret
+onhost_blacklist,/webapps/blackboard/execute/nautilus/displayNotificationSettings
+onhost_blacklist,/webapps/portal/execute/tabs/tabManageModules
+external_blacklist,rpinfo.rpi.edu
+onhost_blacklist,/webapps/portal/execute/tabs/tabCustomization
