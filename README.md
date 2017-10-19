@@ -14,13 +14,28 @@ Currently being worked on by [Jacob Lane](https://github.com/Jacob-Lane), [Colin
 
 Inspired by the [Original Python version](https://github.com/slegec/LMS_Grabber) by [Craig Slegel](https://github.com/slegec).
 
-## Usage ##
+## Compiling/Running
 
-Currently, there is no standalone version of the program. Individuals must download a local copy and build from source.
+### Class Files ###
+
+```bash
+cd LMSGrabber
+mvn compile
+cd target/classes
+java rpi.lmsgrabber.App
+```
+
+### JAR ###
+
+```bash
+cd LMSGrabber
+mvn install
+java -jar target/lmsgrabber-0.0.1-SNAPSHOT.jar
+```
 
 ## Contributing ##
 
-Please see our [Contributor's Guide](https://github.com/LMSGrabber/LMSGrabber/wiki/Contributing) and [wiki pages](https://github.com/LMSGrabber/LMSGrabber/wiki) for information on how to contribute towards the project.  
+Please see our [Contributor's Guide](https://github.com/LMSGrabber/LMSGrabber/wiki/Contributing) and [wiki pages](https://github.com/LMSGrabber/LMSGrabber/wiki) for information on how to contribute towards the project.
 
 ## Other notes ##
 
