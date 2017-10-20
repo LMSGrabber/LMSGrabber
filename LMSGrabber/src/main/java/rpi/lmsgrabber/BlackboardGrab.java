@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class BlackboardGrab extends GenericGrabber {
+
+  private static final Logger logger = LogManager.getLogger();
 
   @Override
   public void grab() {
@@ -24,7 +29,7 @@ public class BlackboardGrab extends GenericGrabber {
         getCourseContent(cl);
       }
     } catch (MalformedURLException murl) {
-      murl.printStackTrace();
+      log.error("Malformed URL in grab", murl);
     }
     driver.close();
   }
@@ -37,7 +42,7 @@ public class BlackboardGrab extends GenericGrabber {
         getCourseContent(cl);
       }
     } catch (MalformedURLException murl) {
-      murl.printStackTrace();
+      log.error("Malformed URL in grab", murl);
     }
     driver.close();
   }
@@ -68,7 +73,7 @@ public class BlackboardGrab extends GenericGrabber {
     if (selected == 0) {
       return new String[] {username.getText(), new String(pass.getPassword())};
     } else {
-      System.err.println("Error, user canceled login.");
+      logger.error("User cancelled login");
       driver.close();
       System.exit(0);
       return null;
@@ -103,7 +108,7 @@ public class BlackboardGrab extends GenericGrabber {
 
       // Only get links off of host pages, and download the others
       if (curl.getHost().equals(cl.getURL().getHost())) {
-        System.out.println("Attempting to get links on " + curl);
+        logger.debug("Attempting to get links on {}", curl);
 
         driver.navigate().to(curl);
         // Get all links
@@ -119,7 +124,7 @@ public class BlackboardGrab extends GenericGrabber {
         links_str.removeAll(cl.previously_visited);
         cl.to_visit.addAll(links_str);
       } else {
-        System.out.println("Attempting to dl " + curl);
+        logger.debug("Attempting to download {}", curl);
         driver.navigate().to(curl);
       }
     }

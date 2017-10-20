@@ -16,8 +16,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @SuppressWarnings("restriction")
 public class App extends Application {
+
+  private static final Logger logger = LogManager.getLogger();
 
   private Stage primaryStage;
   private Pane rootLayout;
@@ -34,7 +39,7 @@ public class App extends Application {
       primaryStage.setScene(scene);
       primaryStage.show();
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error("IOException", e);
     }
 
   }
