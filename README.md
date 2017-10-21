@@ -20,17 +20,15 @@ Inspired by the [Original Python version](https://github.com/slegec/LMS_Grabber)
 
 ```bash
 cd LMSGrabber
-mvn compile
-cd target/classes
-java rpi.lmsgrabber.App
+mvn exec:java -D exec.mainClass=rpi.lmsgrabber.App
 ```
 
 ### JAR ###
 
 ```bash
 cd LMSGrabber
-mvn install
-java -jar target/lmsgrabber-0.0.1-SNAPSHOT.jar
+mvn package
+java -jar target/lmsgrabber-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 ## Contributing ##
