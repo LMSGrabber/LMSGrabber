@@ -105,14 +105,6 @@ public class LMSFxController {
     assert btn_add_new_lms != null : "fx:id=\"btn_add_new_lms\" was not injected: check your FXML file 'ui_mockup.fxml'.";
     assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'ui_mockup.fxml'.";
 
-
-
-    // Setup grid view
-    lmstableview.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("identifier"));
-    lmstableview.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("baseurl"));
-    lmstableview.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("username"));
-    lmstableview.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("lastupdated"));
-
     // Set up combo box
     allowed_grabbers.add(BlackboardGrab.class);
     cmb_lms_type_selector.setItems(allowed_grabbers);
