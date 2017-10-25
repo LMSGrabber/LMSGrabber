@@ -34,6 +34,8 @@ public class App extends Application {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ui_mockup.fxml"));
       rootLayout = loader.load();
 
+      primaryStage.setTitle("LMSGrabber");
+
       // Show the scene containing the root layout.
       Scene scene = new Scene(rootLayout);
       primaryStage.setScene(scene);
