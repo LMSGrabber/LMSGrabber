@@ -19,10 +19,15 @@ import org.apache.logging.log4j.Logger;
 public class BlackboardGrab extends GenericGrabber {
 
   private static final Logger logger = LogManager.getLogger();
+  
+  public BlackboardGrab()
+  {
+    identifier = "Blackboard";
+  }
 
   @Override
   public void grab() {
-    base_url = "https://lms.rpi.edu";
+    baseurl = "https://lms.rpi.edu";
     try {
       login();
       for (CourseListing cl : getCourseListings()) {
@@ -34,64 +39,11 @@ public class BlackboardGrab extends GenericGrabber {
     driver.close();
   }
 
-  public void grab(String username, String password) {
-    base_url = "https://lms.rpi.edu";
-    try {
-      login(username, password);
-      for (CourseListing cl : getCourseListings()) {
-        getCourseContent(cl);
-      }
-    } catch (MalformedURLException murl) {
-      log.error("Malformed URL in grab", murl);
-    }
-    driver.close();
-  }
-
-  private void login(String username, String password) {
-    driver.navigate().to(base_url);
-    setText(By.name("user_id"), username).setText(By.name("password"), password)
-        .click(By.id("entry-login"));
-  }
-
-  public String[] getUserCredentials() {
-    JPanel panel = new JPanel();
-    JLabel pwlabel = new JLabel("Enter a password:");
-    JLabel unlabel = new JLabel("Enter a username:");
-    JPasswordField pass = new JPasswordField(50);
-    JTextField username = new JTextField(50);
-
-    panel.add(unlabel);
-    panel.add(username);
-    panel.add(pwlabel);
-    panel.add(pass);
-    String[] options = new String[] {"OK", "Cancel"};
-    int selected = JOptionPane.showOptionDialog(null, panel, "Enter LMS credentials",
-        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, username);
-    // TODO submit on enter as well as "OK"
-    // TODO adjust layout to have username and password fields appropriately sized
-    // TODO check for login failures
-    if (selected == 0) {
-      return new String[] {username.getText(), new String(pass.getPassword())};
-    } else {
-      logger.error("User cancelled login");
-      driver.close();
-      System.exit(0);
-      return null;
-    }
-  }
-
   @Override
   public void login() throws MalformedURLException {
-    driver.navigate().to(base_url);
+    driver.navigate().to(baseurl);
 
-    // Get user credentials, retry while invalid
-    String[] cred = null;
-
-    while (cred == null) {
-      cred = getUserCredentials();
-    }
-
-    setText(By.name("user_id"), cred[0]).setText(By.name("password"), cred[1])
+    setText(By.name("user_id"), username).setText(By.name("password"), password)
         .click(By.id("entry-login"));
   }
 
