@@ -13,35 +13,36 @@ public abstract class GenericGrabber extends Locomotive {
   public String password;
   public String lastupdated;
 
-  //Gets all files
+  // Gets all files
   public abstract void grab();
-  //Logs in to website
+
+  // Logs in to website
   public abstract void login() throws MalformedURLException;
-  //Gets a list of all courses on this website
-  public abstract CourseListing[] getCourseListings() throws MalformedURLException; 
-  
-  String getUsername()
-  {
+
+  // Gets a list of all courses on this website
+  public abstract CourseListing[] getCourseListings() throws MalformedURLException;
+
+  public String getUsername() {
     return username;
   }
-  void setUsername(String value)
-  {
+
+  public void setUsername(String value) {
     this.username = value;
   }
-  String getBaseurl()
-  {
+
+  public String getBaseurl() {
     return baseurl;
   }
-  void setBaseurl(String value)
-  {
+
+  public void setBaseurl(String value) {
     this.baseurl = value;
   }
-  String getIdentifier()
-  {
+
+  public String getIdentifier() {
     return identifier;
   }
-  void setIdentifier(String value)
-  {
+
+  public void setIdentifier(String value) {
     this.identifier = value;
   }
 

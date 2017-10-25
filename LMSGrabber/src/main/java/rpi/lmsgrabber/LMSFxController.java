@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,10 +20,12 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import net.bytebuddy.description.type.TypeDescription.Generic;
 
 public class LMSFxController {
-  
-  private final ObservableList<GenericGrabber> data =
+
+  private final ObservableList<GenericGrabber> data = FXCollections.observableArrayList();
+  private final ObservableList<Class<? extends GenericGrabber>> allowed_grabbers =
       FXCollections.observableArrayList();
 
   @FXML // ResourceBundle that was given to the FXMLLoader
@@ -40,6 +43,9 @@ public class LMSFxController {
   @FXML // fx:id="url"
   private TextField url; // Value injected by FXMLLoader
 
+  @FXML // fx:id="btn_add_new_lms"
+  private Button btn_add_new_lms; // Value injected by FXMLLoader
+
   @FXML // fx:id="username"
   private TextField username; // Value injected by FXMLLoader
 
@@ -48,14 +54,17 @@ public class LMSFxController {
 
   @FXML // fx:id="lmstableview"
   private TableView<GenericGrabber> lmstableview; // Value injected by FXMLLoader
-  
-  
+
+  @FXML // fx:id="cmb_lms_type_selector"
+  private ComboBox<Class<? extends GenericGrabber>> cmb_lms_type_selector;
+
+
   @FXML
-  void on_btn_click_grab(ActionEvent event) {
+  void onBtnClickGrab(ActionEvent event) {
     System.out.println("Trigger btn click grab");
     Thread thread = new Thread(new Runnable() {
       public void run() {
-        for(GenericGrabber grabber : data)
+        for (GenericGrabber grabber : data)
           grabber.grab();
       }
 
@@ -63,41 +72,50 @@ public class LMSFxController {
 
     thread.start();
   }
-  
+
   @FXML
-  void btn_click_add_new_lms(ActionEvent event) {
+  void onBtnClickAddNewLMS(ActionEvent event) {
     System.out.println("Trigger btn click add new LMS");
-    BlackboardGrab grabber = new BlackboardGrab();
-    grabber.username = username.getText();
-    grabber.password = password.getText();
-    grabber.baseurl = url.getText();
-    username.clear();
-    password.clear();
-    url.clear();
-    data.add(grabber);
-    lmstableview.setItems(data);
+    try {
+      GenericGrabber grabber =
+          cmb_lms_type_selector.getSelectionModel().getSelectedItem().newInstance();
+      grabber.username = username.getText();
+      grabber.password = password.getText();
+      grabber.baseurl = url.getText();
+      username.clear();
+      password.clear();
+      url.clear();
+      data.add(grabber);
+      lmstableview.setItems(data);
+    } catch (InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
 
   @FXML // This method is called by the FXMLLoader when initialization is complete
   void initialize() {
-    assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+    // Check for loading
+    assert treeoverview != null : "fx:id=\"treeoverview\" was not injected: check your FXML file 'ui_mockup.fxml'.";
     assert btn_grab != null : "fx:id=\"btn_grab\" was not injected: check your FXML file 'ui_mockup.fxml'.";
-    assert url != null : "fx:id=\"url\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+    assert lmstableview != null : "fx:id=\"lmstableview\" was not injected: check your FXML file 'ui_mockup.fxml'.";
     assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'ui_mockup.fxml'.";
-    
-    lmstableview.getColumns().get(0).setCellValueFactory(
-        new PropertyValueFactory<>("identifier")
-    );
-    lmstableview.getColumns().get(1).setCellValueFactory(
-        new PropertyValueFactory<>("baseurl")
-    );
-    lmstableview.getColumns().get(2).setCellValueFactory(
-        new PropertyValueFactory<>("username")
-    );
-    lmstableview.getColumns().get(3).setCellValueFactory(
-        new PropertyValueFactory<>("lastupdated")
-    );
+    assert url != null : "fx:id=\"url\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+    assert cmb_lms_type_selector != null : "fx:id=\"cmb_lms_type_selector\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+    assert btn_add_new_lms != null : "fx:id=\"btn_add_new_lms\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+    assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'ui_mockup.fxml'.";
+
+
+
+    // Setup grid view
+    lmstableview.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("identifier"));
+    lmstableview.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("baseurl"));
+    lmstableview.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("username"));
+    lmstableview.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("lastupdated"));
+
+    // Set up combo box
+    allowed_grabbers.add(BlackboardGrab.class);
+    cmb_lms_type_selector.setItems(allowed_grabbers);
 
   }
 }
