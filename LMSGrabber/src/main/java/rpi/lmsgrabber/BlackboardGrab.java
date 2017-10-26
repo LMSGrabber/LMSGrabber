@@ -9,6 +9,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import edu.uci.ics.crawler4j.*;
+import edu.uci.ics.crawler4j.crawler.CrawlConfig;
+import edu.uci.ics.crawler4j.crawler.CrawlController;
+import edu.uci.ics.crawler4j.crawler.authentication.AuthInfo;
+import edu.uci.ics.crawler4j.crawler.authentication.FormAuthInfo;
+import edu.uci.ics.crawler4j.fetcher.PageFetcher;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class BlackboardGrab extends GenericGrabber {
 
@@ -20,24 +28,63 @@ public class BlackboardGrab extends GenericGrabber {
 
   @Override
   public void grab() {
-    baseurl = "https://lms.rpi.edu";
+    baseurl = "https://lms.rpi.edu/";
+    String crawlStorageFolder = "/tmp/crawl";
+    CrawlConfig config = new CrawlConfig();
+    config.setCrawlStorageFolder(crawlStorageFolder);
+    AuthInfo authJavaForum;
     try {
-      login();
-      for (CourseListing cl : getCourseListings()) {
-        getCourseContent(cl);
-      }
-    } catch (MalformedURLException murl) {
-      log.error("Malformed URL in grab", murl);
+      authJavaForum = new FormAuthInfo(username, password, "https://lms.rpi.edu/webapps/login/", "user_id", "password");
+    } catch (MalformedURLException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+      return;
     }
-    driver.close();
+    config.addAuthInfo(authJavaForum);
+
+    PageFetcher pageFetcher = new PageFetcher(config);
+    RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+    robotstxtConfig.setEnabled(false);
+    RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+    CrawlController controller;
+    try {
+      controller = new CrawlController(config, pageFetcher, robotstxtServer);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return;
+    }
+
+    /*
+     * For each crawl, you need to add some seed urls. These are the first
+     * URLs that are fetched and then the crawler starts following links
+     * which are found in these pages
+     */
+//    controller.addSeed("http://www.ics.uci.edu/~lopes/");
+//    controller.addSeed("http://www.ics.uci.edu/~welling/");
+//    controller.addSeed("http://www.ics.uci.edu/");
+//    controller.addSeed("https://lms.rpi.edu/");
+    controller.addSeed("https://lms.rpi.edu/webapps/portal/execute/tabs/tabAction?tabId=_1_1");
+
+    /*
+     * Start the crawl. This is a blocking operation, meaning that your code
+     * will reach the line after this only when crawling is finished.
+     */
+    controller.start(BlackboardCrawler.class, Runtime.getRuntime().availableProcessors());
+//    try {
+//      login();
+//      for (CourseListing cl : getCourseListings()) {
+//        getCourseContent(cl);
+//      }
+//    } catch (MalformedURLException murl) {
+//      log.error("Malformed URL in grab", murl);
+//    }
+//    driver.close();
   }
 
   @Override
   public void login() throws MalformedURLException {
-    driver.navigate().to(baseurl);
-
-    setText(By.name("user_id"), username).setText(By.name("password"), password)
-        .click(By.id("entry-login"));
+    return;
   }
 
   public void getCourseContent(CourseListing cl) throws MalformedURLException {
