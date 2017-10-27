@@ -35,6 +35,8 @@ java -jar target/lmsgrabber-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 Please see our [Contributor's Guide](https://github.com/LMSGrabber/LMSGrabber/wiki/Contributing) and [wiki pages](https://github.com/LMSGrabber/LMSGrabber/wiki) for information on how to contribute towards the project.
 
+Builds are automatically triggered and placed under the release section for any [tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
+
 ## Other notes ##
 
 If running from outside of the RPI campus, LMS may require a VPN. See [here](http://dotcio.rpi.edu/services/network-remote-access/vpn-connection-and-installation) for more details.
