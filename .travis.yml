@@ -1,15 +1,20 @@
-sudo: false # faster builds
-
+sudo: false
 language: java
 jdk: oraclejdk8
-
 before_script: cd LMSGrabber
-
-script: mvn clean install cobertura:cobertura -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
+script: mvn clean install cobertura:cobertura package -B -V
 cache:
-  directories:
-  - $HOME/.m2
-
+    directories:
+        - "$HOME/.m2"
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+    - bash <(curl -s https://codecov.io/bash)
+deploy:
+    provider: releases
+    api_key:
+        secure: OQGua7PhDllz7HgLjx17nRRwvNoU4oqVazloa78PJFr4F9CNHbDmYQLYIx+R7F/7KcX1X5ohtieJ6iwp07A3oKN/r4UqE5t6FiJDoOrC91D4+UFSfoicokuVm9/m3iDu+BORh26MgBZYT/7UJmC/1FcmZrfUxz/DCa2vFmwSR+lI2lecpfAR4ufyQVD0qsSl8vkC0Q5GNKHMBORhDHC09x8s7rr5yttTotoBHVEMm6Ecmil4AjVXeKRv3M73nUkRbdtpWQ/BnPEICajgE8X/bv/Z99RRtE7py4PAF86uHLw0Cx2v18aGJrD/MHZdcpNk86FQHaXvSTNGrQPh/GhEYDwKf4e+ep0JLG7mxPj/Ny//nPgnLuTgP0gMd/7FqcZldyjXBNZiRFs84Zlk2x5hJlCODKDHd2CLBl6peaKC3ku3ly4/kkUQLxp2F2rGyQjh9BtDnVQB7OLag3v5HoYkYr5gggNY1xx6ursEU20dbo98eGDXkqEwe/Ym1Zpw+ya2YPILKNxHVpNGrzBDUiABkdLDS0NAI8mbU26cfGVKXqV++RVHyC9LIWv4jbMrXaeiXH9qtI7UpR6ZaHH5uOCIGNDRJNj6jc9Yeu9//JuoyFLEigEdKIrMppEoQi7JMNuH6Q1Ab4g/e89PYFfc9OnjmHkWXcukW8i1tiNrWic+pfQ=
+    file: target/lmsgrabber-*
+    skip_cleanup: true
+    overwrite: true
+    on:
+        repo: LMSGrabber/LMSGrabber
+        tags: true
