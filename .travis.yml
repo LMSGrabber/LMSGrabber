@@ -12,7 +12,8 @@ deploy:
   provider: releases
   api_key:
     secure: Di37IE1ihsi79mCrgzAj5HMIyZW1dz9frhn9ZGcHfwKgSk+6VGw0XPNsjnm9Zb6Q882oH7s7KGSYiJzEs94REp0WKIoPKbOd5qzBhf2Ox0uvP72jh03DY0XKGUGPPAR54T2aBcMMW/5rGaPFmcmJ2bOm91+xWD5PmG6ou9N3llkgcvGWA4JJ3EBKX4Wb5/kbKa4Chx/Rb/29CpzPgIkPrhjJZCyQ6Va7blbumQr/MJZlJ4IbtWpGpAF8aBxgs37nT57CyLfWjX1ZRhQJXGMfXDsrg3Cu+uPPXNnZQWA5Na69RxJiJOslLCQXtgZLBBLPllF1SBblS9xoUWvhgQRgz3lwaUgWis3xBmRqMGH7/6E7R0qYB9rxGxVt9Q0UySia9aCdYirUfmSKQIMccHMm1yrm9t/dAKfCbxtqgYXWSfldJNOEkbP96JM5co/8JnkxL/Eu1PXBNHVYVvM9XySf7GkAwPeZO/h7YbixWNh8dHDbXxFGf7gIx+FhuK3P1JhWlx21VlX2GNljrX8j+9T7+vA5vi7vXuHEZB1VbnBz5aW9tLSr32XmV8NvG2bxzb2cZKtZjVuyfS1WiW5Tq267l6232bBbkCV7mDvogA0gIOKStKyoQ5Nr2YrTDh9i5ce//pxWOf0mJicuXH2IPbnz/CmbkMokIY5debNaRtuOIZ8=
-  file: target/lmsgrabber-*
+  file: target/*.jar
+  file_glob: true
   skip_cleanup: true
   overwrite: true
   on:
