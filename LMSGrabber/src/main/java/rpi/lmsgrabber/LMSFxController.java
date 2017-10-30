@@ -4,6 +4,9 @@
 
 package rpi.lmsgrabber;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -58,10 +61,23 @@ public class LMSFxController {
   @FXML // fx:id="cmb_lms_type_selector"
   private ComboBox<Class<? extends GenericGrabber>> cmb_lms_type_selector;
 
+  @FXML
+  void onBtnClickAbout(ActionEvent event) {
+    try {
+      java.awt.Desktop.getDesktop().browse(new URI("https://github.com/LMSGrabber/LMSGrabber"));
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  @FXML
+  void onBtnClickSettings(ActionEvent event) {
+    //TODO
+  }
 
+  
   @FXML
   void onBtnClickGrab(ActionEvent event) {
-    System.out.println("Trigger btn click grab");
     Thread thread = new Thread(new Runnable() {
       public void run() {
         for (GenericGrabber grabber : data)
@@ -75,7 +91,6 @@ public class LMSFxController {
 
   @FXML
   void onBtnClickAddNewLMS(ActionEvent event) {
-    System.out.println("Trigger btn click add new LMS");
     try {
       GenericGrabber grabber =
           cmb_lms_type_selector.getSelectionModel().getSelectedItem().newInstance();
