@@ -39,4 +39,4 @@ Builds are automatically triggered and placed under the release section for any 
 
 ## Other notes ##
 
-If running from outside of the RPI campus, LMS may require a VPN. See [here](http://dotcio.rpi.edu/services/network-remote-access/vpn-connection-and-installation) for more details.
+Please check your LMS's user agreements and your school's policies on automated web crawling before using LMS Grabber.
