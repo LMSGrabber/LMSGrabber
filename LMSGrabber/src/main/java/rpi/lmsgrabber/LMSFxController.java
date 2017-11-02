@@ -124,7 +124,9 @@ public class LMSFxController {
 
     // Set up combo box
     allowed_grabbers.add(BlackboardGrab.class);
+    allowed_grabbers.add(PiazzaGrab.class);
     cmb_lms_type_selector.setItems(allowed_grabbers);
+    
     treeoverview.setRoot(new TreeItem<GenericGrabber>(null));
   }
 }
