@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
@@ -102,6 +103,7 @@ public class LMSFxController {
       url.clear();
       data.add(grabber);
       lmstableview.setItems(data);
+      treeoverview.getRoot().getChildren().add(new TreeItem<GenericGrabber>(grabber));
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
@@ -123,6 +125,6 @@ public class LMSFxController {
     // Set up combo box
     allowed_grabbers.add(BlackboardGrab.class);
     cmb_lms_type_selector.setItems(allowed_grabbers);
-
+    treeoverview.setRoot(new TreeItem<GenericGrabber>(null));
   }
 }

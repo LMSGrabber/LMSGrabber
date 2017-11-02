@@ -5,13 +5,13 @@ import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
 import io.ddavison.conductor.Locomotive;
 
-@Config(browser = Browser.CHROME)
-public abstract class GenericGrabber extends Locomotive {
+public abstract class GenericGrabber {
   public String baseurl;
   public String identifier;
   public String username;
   public String password;
   public String lastupdated;
+  GrabAction action = null;
 
   // Gets all files
   public abstract void grab();
