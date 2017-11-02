@@ -1,6 +1,7 @@
 # LMS Grabber #
 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/97a997a5aaad418a974e01c2fe02d7cf)](https://www.codacy.com/app/robinm8/LMSGrabber?utm_source=github.com&utm_medium=referral&utm_content=LMSGrabber/LMSGrabber&utm_campaign=badger)
 [![Build Status](https://img.shields.io/travis/LMSGrabber/LMSGrabber/master.svg)](https://travis-ci.org/LMSGrabber/LMSGrabber)
 [![Codecov](https://img.shields.io/codecov/c/github/LMSGrabber/LMSGrabber.svg)](https://codecov.io/gh/LMSGrabber/LMSGrabber/)
 [![Code Climate](https://img.shields.io/codeclimate/github/LMSGrabber/LMSGrabber.svg)](https://codeclimate.com/github/LMSGrabber/LMSGrabber)
