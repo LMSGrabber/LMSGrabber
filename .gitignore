@@ -1,5 +1,4 @@
 /bin/
 .vscode
-LMSGrabber/chromedriver.exe
-LMSGrabber/chromedriver.linux
-LMSGrabber/chromedriver.mac
+drivers/
+chromedriver*
