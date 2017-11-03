@@ -13,30 +13,32 @@ import org.apache.logging.log4j.Logger;
 public class BlackboardGrab extends GenericGrabber {
 
   private static final Logger logger = LogManager.getLogger();
-
+  
   public BlackboardGrab() {
     identifier = "Blackboard";
   }
 
   @Override
   public void grab() {
+    action = new GrabAction();
     baseurl = "https://lms.rpi.edu";
     try {
       login();
-      for (CourseListing cl : getCourseListings()) {
+      getCourseListings();
+      for (CourseListing cl : subGrabbers) {
         getCourseContent(cl);
       }
-    } catch (MalformedURLException murl) {
-      log.error("Malformed URL in grab", murl);
+    } catch (Exception e) {
+      action.log.error("Malformed URL in grab", e);
     }
-    driver.close();
+    action.driver.close();
+    action = null;
   }
 
   @Override
   public void login() throws MalformedURLException {
-    driver.navigate().to(baseurl);
-
-    setText(By.name("user_id"), username).setText(By.name("password"), password)
+    action.driver.navigate().to(baseurl);
+    action.setText(By.name("user_id"), username).setText(By.name("password"), password)
         .click(By.id("entry-login"));
   }
 
@@ -55,9 +57,9 @@ public class BlackboardGrab extends GenericGrabber {
       if (curl.getHost().equals(cl.getURL().getHost())) {
         logger.debug("Attempting to get links on {}", curl);
 
-        driver.navigate().to(curl);
+        action.driver.navigate().to(curl);
         // Get all links
-        List<WebElement> links = driver.findElements(By.tagName("a"));
+        List<WebElement> links = action.driver.findElements(By.tagName("a"));
         Set<String> links_str = new HashSet<String>();
         for (WebElement we : links) {
           String href = we.getAttribute("href");
@@ -70,7 +72,7 @@ public class BlackboardGrab extends GenericGrabber {
         cl.to_visit.addAll(links_str);
       } else {
         logger.debug("Attempting to download {}", curl);
-        driver.navigate().to(curl);
+        action.driver.navigate().to(curl);
       }
     }
     // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
@@ -78,11 +80,11 @@ public class BlackboardGrab extends GenericGrabber {
   }
 
   @Override
-  public CourseListing[] getCourseListings() throws MalformedURLException {
+  public void getCourseListings() throws MalformedURLException {
     // From the home page, retrieve all links to current courses
     // We also need to remove any links present in the course data block to prevent announcements
     // from being interpreted as classes
-    WebElement simpleTable = waitForElement(By.xpath("//*[@id=\"_3_1termCourses_noterm\"]/ul"));
+    WebElement simpleTable = action.waitForElement(By.xpath("//*[@id=\"_3_1termCourses_noterm\"]/ul"));
     List<WebElement> links = simpleTable.findElements(By.tagName("a"));
     List<WebElement> courseDataBlocks = simpleTable.findElements(By.className("courseDataBlock"));
     for (WebElement we : courseDataBlocks) {
@@ -95,7 +97,7 @@ public class BlackboardGrab extends GenericGrabber {
       cls[i].course_name = links.get(i).getText();
       cls[i].base_url = links.get(i).getAttribute("href");
     }
-    return cls;
+    addSubGrabber(cls);
   }
 
 }

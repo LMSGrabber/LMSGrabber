@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import com.google.gson.Gson;
 
-class CourseListing {
+class CourseListing extends GenericGrabber {
   String base_url; // URL of page that the COURSE is located on
   String student_name; // Student taking this course
   String student_id; // Student ID of student taking this course
@@ -32,7 +32,22 @@ class CourseListing {
 
   @Override
   public String toString() {
-    Gson gson = new Gson();
-    return gson.toJson(this);
+    return course_name;
+  }
+
+  @Override
+  public void grab() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void login() throws MalformedURLException {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void getCourseListings() throws MalformedURLException {
   }
 }
