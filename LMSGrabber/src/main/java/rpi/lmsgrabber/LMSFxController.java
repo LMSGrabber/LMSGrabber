@@ -103,7 +103,9 @@ public class LMSFxController {
       url.clear();
       data.add(grabber);
       lmstableview.setItems(data);
-      treeoverview.getRoot().getChildren().add(new TreeItem<GenericGrabber>(grabber));
+      TreeItem<GenericGrabber> item = new TreeItem<GenericGrabber>(grabber);
+      grabber.myTreeItem = item;
+      treeoverview.getRoot().getChildren().add(item);
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
@@ -127,6 +129,6 @@ public class LMSFxController {
     allowed_grabbers.add(PiazzaGrab.class);
     cmb_lms_type_selector.setItems(allowed_grabbers);
     
-    treeoverview.setRoot(new TreeItem<GenericGrabber>(null));
+    treeoverview.setRoot(new TreeItem(null));
   }
 }

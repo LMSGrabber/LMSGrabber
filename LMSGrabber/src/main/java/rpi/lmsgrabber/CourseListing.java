@@ -32,8 +32,7 @@ class CourseListing extends GenericGrabber {
 
   @Override
   public String toString() {
-    Gson gson = new Gson();
-    return gson.toJson(this);
+    return course_name;
   }
 
   @Override
@@ -49,7 +48,6 @@ class CourseListing extends GenericGrabber {
   }
 
   @Override
-  public CourseListing[] getCourseListings() throws MalformedURLException {
-    return null;
+  public void getCourseListings() throws MalformedURLException {
   }
 }

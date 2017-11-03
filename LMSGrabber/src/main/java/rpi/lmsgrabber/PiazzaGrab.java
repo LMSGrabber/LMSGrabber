@@ -24,9 +24,7 @@ public class PiazzaGrab extends GenericGrabber {
     baseurl = "https://piazza.com";
     try {
       login();
-      for (CourseListing cl : getCourseListings()) {
-        getCourseContent(cl);
-      }
+      getCourseListings();
     } catch (MalformedURLException murl) {
       action.log.error("Malformed URL in grab", murl);
     }
@@ -41,13 +39,10 @@ public class PiazzaGrab extends GenericGrabber {
         .click(By.id("modal_login_button"));
   }
 
-  public void getCourseContent(CourseListing cl) throws MalformedURLException {
-  
+  @Override
+  public void getCourseListings() throws MalformedURLException {
+    // TODO Auto-generated method stub
   }
 
-  @Override
-  public CourseListing[] getCourseListings() throws MalformedURLException {
-    return null;
-  }
 
 }

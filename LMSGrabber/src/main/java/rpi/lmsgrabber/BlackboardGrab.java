@@ -24,11 +24,12 @@ public class BlackboardGrab extends GenericGrabber {
     baseurl = "https://lms.rpi.edu";
     try {
       login();
-      for (CourseListing cl : getCourseListings()) {
+      getCourseListings();
+      for (CourseListing cl : subGrabbers) {
         getCourseContent(cl);
       }
-    } catch (MalformedURLException murl) {
-      action.log.error("Malformed URL in grab", murl);
+    } catch (Exception e) {
+      action.log.error("Malformed URL in grab", e);
     }
     action.driver.close();
     action = null;
@@ -79,7 +80,7 @@ public class BlackboardGrab extends GenericGrabber {
   }
 
   @Override
-  public CourseListing[] getCourseListings() throws MalformedURLException {
+  public void getCourseListings() throws MalformedURLException {
     // From the home page, retrieve all links to current courses
     // We also need to remove any links present in the course data block to prevent announcements
     // from being interpreted as classes
@@ -96,7 +97,7 @@ public class BlackboardGrab extends GenericGrabber {
       cls[i].course_name = links.get(i).getText();
       cls[i].base_url = links.get(i).getAttribute("href");
     }
-    return cls;
+    addSubGrabber(cls);
   }
 
 }
