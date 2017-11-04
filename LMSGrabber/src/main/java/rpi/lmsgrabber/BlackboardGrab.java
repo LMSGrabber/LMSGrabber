@@ -1,18 +1,23 @@
 package rpi.lmsgrabber;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BlackboardGrab extends GenericGrabber {
 
   private static final Logger logger = LogManager.getLogger();
+  private static final String courseMenuString = "/webapps/blackboard/content/courseMenu.jsp?course_id=";
   
   public BlackboardGrab() {
     identifier = "Blackboard";
@@ -31,18 +36,20 @@ public class BlackboardGrab extends GenericGrabber {
     } catch (Exception e) {
       action.log.error("Malformed URL in grab", e);
     }
-    action.driver.close();
+    action.closeWindow();
     action = null;
   }
 
   @Override
   public void login() throws MalformedURLException {
-    action.driver.navigate().to(baseurl);
+    action.navigateTo(baseurl);
     action.setText(By.name("user_id"), username).setText(By.name("password"), password)
         .click(By.id("entry-login"));
   }
 
   public void getCourseContent(CourseListing cl) throws MalformedURLException {
+    action.navigateTo(baseurl + courseMenuString + cl.course_id);
+    /*
     cl.to_visit.add(cl.base_url);
     // TODO Temporary lazy solution: Just say we already visited the logout page
     // TODO need to remove cycles that involve URL modifiers
@@ -57,7 +64,7 @@ public class BlackboardGrab extends GenericGrabber {
       if (curl.getHost().equals(cl.getURL().getHost())) {
         logger.debug("Attempting to get links on {}", curl);
 
-        action.driver.navigate().to(curl);
+        action.driver.navigateTo(curl);
         // Get all links
         List<WebElement> links = action.driver.findElements(By.tagName("a"));
         Set<String> links_str = new HashSet<String>();
@@ -72,11 +79,13 @@ public class BlackboardGrab extends GenericGrabber {
         cl.to_visit.addAll(links_str);
       } else {
         logger.debug("Attempting to download {}", curl);
-        action.driver.navigate().to(curl);
+        action.driver.navigateTo(curl);
       }
     }
     // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
     // wget.download();
+     * 
+     */
   }
 
   @Override
@@ -95,7 +104,26 @@ public class BlackboardGrab extends GenericGrabber {
     for (int i = 0; i < links.size(); i++) {
       cls[i] = new CourseListing();
       cls[i].course_name = links.get(i).getText();
-      cls[i].base_url = links.get(i).getAttribute("href");
+      String course_url = links.get(i).getAttribute("href");
+      cls[i].base_url = course_url;
+      try {
+        List<NameValuePair> params;
+
+        params = URLEncodedUtils.parse(new URI(course_url), java.nio.charset.StandardCharsets.UTF_8);
+
+      //Find course_id str
+      for(NameValuePair nvp : params)
+      {
+        if(nvp.getName().equals("course_id"))
+        {
+          cls[i].course_id = nvp.getValue();
+              break;
+        }
+      }
+      } catch (URISyntaxException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
     addSubGrabber(cls);
   }
