@@ -1,5 +1,7 @@
 package rpi.lmsgrabber;
 
+import java.net.URI;
+import java.net.URL;
 import org.openqa.selenium.WebDriver;
 import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
@@ -13,11 +15,22 @@ public class GrabAction extends Locomotive {
     System.out.println("Visited " + url);
     return super.navigateTo(url);
   }
+  
+  public void navigateTo(URL url) {
+    navigateTo(url.toString());
+  }
+  
+  public void navigateTo(URI uri)
+  {
+    navigateTo(uri.toString());
+  }
 
+  /*
   @Override
   public WebDriver getDriver() {
     System.err.println("Warning: Accessing webdriver directly");
     return super.getDriver();
   }
+  */
   
 }

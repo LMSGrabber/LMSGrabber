@@ -79,15 +79,15 @@ public class LMSFxController {
   
   @FXML
   void onBtnClickGrab(ActionEvent event) {
-    Thread thread = new Thread(new Runnable() {
-      public void run() {
-        for (GenericGrabber grabber : data)
-          grabber.grab();
-      }
-
-    });
-
-    thread.start();
+    for (final GenericGrabber grabber : data) {
+      Thread thread = new Thread(new Runnable() {
+        public void run() {
+            grabber.grab();
+        }
+  
+      });  
+      thread.start();
+    }
   }
 
   @FXML

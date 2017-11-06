@@ -48,8 +48,8 @@ public class BlackboardGrab extends GenericGrabber {
   }
 
   public void getCourseContent(CourseListing cl) throws MalformedURLException {
-    action.navigateTo(baseurl + courseMenuString + cl.course_id);
-    /*
+    //action.navigateTo(baseurl + courseMenuString + cl.course_id);
+    
     cl.to_visit.add(cl.base_url);
     // TODO Temporary lazy solution: Just say we already visited the logout page
     // TODO need to remove cycles that involve URL modifiers
@@ -64,7 +64,7 @@ public class BlackboardGrab extends GenericGrabber {
       if (curl.getHost().equals(cl.getURL().getHost())) {
         logger.debug("Attempting to get links on {}", curl);
 
-        action.driver.navigateTo(curl);
+        action.navigateTo(curl);
         // Get all links
         List<WebElement> links = action.driver.findElements(By.tagName("a"));
         Set<String> links_str = new HashSet<String>();
@@ -79,13 +79,12 @@ public class BlackboardGrab extends GenericGrabber {
         cl.to_visit.addAll(links_str);
       } else {
         logger.debug("Attempting to download {}", curl);
-        action.driver.navigateTo(curl);
+        action.navigateTo(curl);
       }
     }
     // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
     // wget.download();
-     * 
-     */
+    
   }
 
   @Override
