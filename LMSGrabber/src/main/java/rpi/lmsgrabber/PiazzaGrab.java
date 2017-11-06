@@ -28,13 +28,13 @@ public class PiazzaGrab extends GenericGrabber {
     } catch (MalformedURLException murl) {
       action.log.error("Malformed URL in grab", murl);
     }
-    action.driver.close();
+    //action.driver.close();
     action = null;
   }
 
   @Override
   public void login() throws MalformedURLException {
-    action.driver.navigate().to(baseurl);
+    action.navigateTo(baseurl);
     action.click(By.id("login_button")).setText(By.name("email"), username).setText(By.name("password"), password)
         .click(By.id("modal_login_button"));
   }

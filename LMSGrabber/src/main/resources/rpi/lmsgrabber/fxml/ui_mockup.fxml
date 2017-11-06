@@ -54,17 +54,17 @@
                               <TableColumn prefWidth="98.0" text="Last Updated" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="username" layoutX="133.0" layoutY="227.0" />
-                        <TextField fx:id="url" layoutX="134.0" layoutY="294.0" />
-                        <ComboBox fx:id="cmb_lms_type_selector" layoutX="134.0" layoutY="330.0" prefWidth="150.0" />
-                        <Label layoutX="23.0" layoutY="223.0" text="Username" />
-                        <Label layoutX="23.0" layoutY="256.0" text="Password" />
-                        <Label layoutX="25.0" layoutY="289.0" text="URL" />
-                        <Label layoutX="25.0" layoutY="325.0" text="LMS Type" />
+                        <ComboBox fx:id="cmb_lms_type_selector" layoutX="132.0" layoutY="221.0" prefWidth="150.0" />
+                        <TextField fx:id="url" layoutX="132.0" layoutY="251.0" />
+                        <TextField fx:id="username" layoutX="133.0" layoutY="290.0" />
+                        <PasswordField fx:id="password" layoutX="134.0" layoutY="324.0" />
                         <Button fx:id="btn_add_new_lms" layoutX="309.0" layoutY="261.0" mnemonicParsing="false" onAction="#onBtnClickAddNewLMS" text="Add new LMS" />
-                        <PasswordField fx:id="password" layoutX="134.0" layoutY="261.0" />
+                        <Label layoutX="23.0" layoutY="286.0" text="Username" />
+                        <Label layoutX="23.0" layoutY="319.0" text="Password" />
+                        <Label layoutX="23.0" layoutY="246.0" text="URL" />
                         <Button layoutX="313.0" layoutY="359.0" mnemonicParsing="false" onAction="#onBtnClickAbout" text="About LMSGrabber" />
                         <Button layoutX="250.0" layoutY="359.0" mnemonicParsing="false" text="Settings" />
+                        <Label layoutX="23.0" layoutY="216.0" text="LMS Type" />
                      </children>
                   </AnchorPane>
               </items>
