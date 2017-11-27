@@ -18,7 +18,7 @@ public class BlackboardGrab extends GenericGrabber {
 
   private static final Logger logger = LogManager.getLogger();
   private static final String courseMenuString = "/webapps/blackboard/content/courseMenu.jsp?course_id=";
-  
+
   public BlackboardGrab() {
     identifier = "Blackboard";
   }
@@ -49,7 +49,7 @@ public class BlackboardGrab extends GenericGrabber {
 
   public void getCourseContent(CourseListing cl) throws MalformedURLException {
     //action.navigateTo(baseurl + courseMenuString + cl.course_id);
-    
+
     cl.to_visit.add(cl.base_url);
     // TODO Temporary lazy solution: Just say we already visited the logout page
     // TODO need to remove cycles that involve URL modifiers
@@ -84,7 +84,7 @@ public class BlackboardGrab extends GenericGrabber {
     }
     // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
     // wget.download();
-    
+
   }
 
   @Override

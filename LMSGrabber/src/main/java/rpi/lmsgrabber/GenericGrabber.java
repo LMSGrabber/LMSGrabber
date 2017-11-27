@@ -16,16 +16,16 @@ public abstract class GenericGrabber {
   public String lastupdated;
   GrabAction action = null;
   TreeItem<GenericGrabber> myTreeItem;
-  
+
   public List<CourseListing> subGrabbers = new ArrayList<CourseListing>();
-  
+
   public void addSubGrabber(CourseListing cl)
   {
     cl.myTreeItem = new TreeItem<GenericGrabber>(cl);
     myTreeItem.getChildren().add(cl.myTreeItem);
     subGrabbers.add(cl);
   }
-  
+
   public void addSubGrabber(CourseListing[] cl)
   {
     for(CourseListing c : cl)
@@ -66,4 +66,3 @@ public abstract class GenericGrabber {
   }
 
 }
-

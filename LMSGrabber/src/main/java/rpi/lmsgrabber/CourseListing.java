@@ -38,13 +38,13 @@ class CourseListing extends GenericGrabber {
   @Override
   public void grab() {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void login() throws MalformedURLException {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
