@@ -12,13 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class BlackboardGrab extends GenericGrabber {
 
-  private static final Logger logger = LogManager.getLogger();
   private static final String courseMenuString = "/webapps/blackboard/content/courseMenu.jsp?course_id=";
-  
+
   public BlackboardGrab() {
     identifier = "Blackboard";
   }
@@ -45,46 +43,6 @@ public class BlackboardGrab extends GenericGrabber {
     action.navigateTo(baseurl);
     action.setText(By.name("user_id"), username).setText(By.name("password"), password)
         .click(By.id("entry-login"));
-  }
-
-  public void getCourseContent(CourseListing cl) throws MalformedURLException {
-    //action.navigateTo(baseurl + courseMenuString + cl.course_id);
-    
-    cl.to_visit.add(cl.base_url);
-    // TODO Temporary lazy solution: Just say we already visited the logout page
-    // TODO need to remove cycles that involve URL modifiers
-    cl.previously_visited.add("https://lms.rpi.edu/webapps/login/?action=logout");
-    while (!cl.to_visit.isEmpty()) {
-      String current = cl.to_visit.iterator().next(); // Current URL
-      URL curl = new URL(current);
-      cl.to_visit.remove(current);
-      cl.previously_visited.add(current);
-
-      // Only get links off of host pages, and download the others
-      if (curl.getHost().equals(cl.getURL().getHost())) {
-        logger.debug("Attempting to get links on {}", curl);
-
-        action.navigateTo(curl);
-        // Get all links
-        List<WebElement> links = action.driver.findElements(By.tagName("a"));
-        Set<String> links_str = new HashSet<String>();
-        for (WebElement we : links) {
-          String href = we.getAttribute("href");
-          if ((href != null) && !href.startsWith("javascript")) {
-            links_str.add(href);
-          }
-        }
-        // Remove all that have already been visited
-        links_str.removeAll(cl.previously_visited);
-        cl.to_visit.addAll(links_str);
-      } else {
-        logger.debug("Attempting to download {}", curl);
-        action.navigateTo(curl);
-      }
-    }
-    // WGet wget = new WGet(cl.base_url, new File("test_html_jpl.html"));
-    // wget.download();
-    
   }
 
   @Override
