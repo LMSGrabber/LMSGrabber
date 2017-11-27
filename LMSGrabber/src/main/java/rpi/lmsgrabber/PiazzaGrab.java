@@ -39,6 +39,9 @@ public class PiazzaGrab extends GenericGrabber {
     try {
       login();
       getCourseListings();
+      for (CourseListing cl : subGrabbers) {
+        getCourseContent(cl);
+      }
     } catch (MalformedURLException murl) {
       action.log.error("Malformed URL in grab", murl);
     }
@@ -56,7 +59,7 @@ public class PiazzaGrab extends GenericGrabber {
   @Override
   public void getCourseListings() throws MalformedURLException {
     // From the home page, retrieve all links to current courses
-    List<WebElement> links = action.driver.findElements(By.xpath("//*[@data-pats='classes_dropdown_item']/div"));
+    List<WebElement> links = action.driver.findElements(By.xpath("//*[@data-pats='classes_dropdown_item']"));
     System.out.println(links.size());//*[@id="network_j6feqds1z771k1"]/
     //*[@id="network_j6feqds1z771k1"]/div
     CourseListing[] cls = new CourseListing[links.size()];
@@ -64,27 +67,10 @@ public class PiazzaGrab extends GenericGrabber {
       cls[i] = new CourseListing();
       String script = "return arguments[0].innerText";
       cls[i].course_name  = (String) ((JavascriptExecutor) action.driver).executeScript(script, links.get(i));
-      String course_url = "";//links.get(i).getAttribute("id");
+      String course_url = baseurl + "/class/" + links.get(i).getAttribute("id").replace("network_", "");
       cls[i].base_url = course_url;
-      /*
-      try {
-        List<NameValuePair> params;
-        params = URLEncodedUtils.parse(new URI(course_url), java.nio.charset.StandardCharsets.UTF_8);
-        //Find course_id str
-        for(NameValuePair nvp : params)
-        {
-          if(nvp.getName().equals("course_id"))
-          {
-            cls[i].course_id = nvp.getValue();
-                break;
-          }
-        }
-      } catch (URISyntaxException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      */
+      System.out.println(cls[i].base_url + "**************");
     }
     addSubGrabber(cls);
-    }
+  }
 }
