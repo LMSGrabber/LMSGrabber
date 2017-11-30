@@ -25,6 +25,11 @@ mvn exec:java -D exec.mainClass=rpi.lmsgrabber.App
 ```
 
 ### JAR ###
+Only one below required per OS:
+
+[Install Maven - OS: Windows](https://www.mkyong.com/maven/how-to-install-maven-in-windows/)
+
+[Install Maven Shell - OS: Linux/MacOS](https://github.com/jdillon/mvnsh)
 
 ```bash
 cd LMSGrabber
