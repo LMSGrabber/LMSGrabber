@@ -31,9 +31,27 @@ Only one below required per OS:
 
 [Install Maven Shell - OS: Linux/MacOS](https://github.com/jdillon/mvnsh)
 
+All OS:
+
 ```bash
 cd LMSGrabber
+```
+
+Windows (mvn):
+
+```bash
 mvn package
+```
+
+Linux / MacOS (mvnsh):
+
+```bash
+mvnsh package
+```
+
+All OS:
+
+```
 java -jar target/lmsgrabber-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
