@@ -4,6 +4,7 @@
 
 package rpi.lmsgrabber;
 
+import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -70,13 +71,13 @@ public class LMSFxController {
       e.printStackTrace();
     }
   }
-  
+
   @FXML
   void onBtnClickSettings(ActionEvent event) {
     //TODO
   }
 
-  
+
   @FXML
   void onBtnClickGrab(ActionEvent event) {
     for (final GenericGrabber grabber : data) {
@@ -84,8 +85,8 @@ public class LMSFxController {
         public void run() {
             grabber.grab();
         }
-  
-      });  
+
+      });
       thread.start();
     }
   }
@@ -127,8 +128,33 @@ public class LMSFxController {
     // Set up combo box
     allowed_grabbers.add(BlackboardGrab.class);
     allowed_grabbers.add(PiazzaGrab.class);
+
+    cmb_lms_type_selector.setConverter(
+                new StringConverter<Class<? extends GenericGrabber>>() {
+                    @Override
+                    public String toString(Class<? extends GenericGrabber> grabby) {
+                        try {
+                        if (grabby == null) {
+                            return "";
+                        } else {
+                            return (grabby).newInstance().getIdentifier();
+                        }
+                      }
+                      catch(Exception e)
+                      {
+                        return "";
+                      }
+                    }
+
+                    @Override
+                    public Class<? extends GenericGrabber> fromString(String s) {
+                        return (Class<? extends GenericGrabber> ) null;
+                    }
+
+                });
+
     cmb_lms_type_selector.setItems(allowed_grabbers);
-    
+
     treeoverview.setRoot(new TreeItem(null));
   }
 }
