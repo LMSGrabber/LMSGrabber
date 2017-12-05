@@ -22,6 +22,11 @@ public class App extends Application {
     try {
       // Load root layout from fxml file.
       FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ui_mockup.fxml"));
+
+      LMSFxController controller = new LMSFxController();
+      controller.setParent(primaryStage);
+      loader.setController(controller);
+
       rootLayout = loader.load();
 
       primaryStage.setTitle("LMSGrabber");
@@ -30,11 +35,6 @@ public class App extends Application {
       Scene scene = new Scene(rootLayout);
       primaryStage.setScene(scene);
       primaryStage.show();
-
-      SettingsWindow test = new SettingsWindow();
-//      Scene scene2 = new Scene(rootLayout);
-//      test.setScene(scene2);
-      test.show();
     } catch (IOException e) {
       logger.error("IOException", e);
     }

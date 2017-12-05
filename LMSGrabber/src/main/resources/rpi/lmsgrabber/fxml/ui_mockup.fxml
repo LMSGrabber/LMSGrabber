@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rpi.lmsgrabber.LMSFxController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -63,7 +63,7 @@
                         <Label layoutX="23.0" layoutY="319.0" text="Password" />
                         <Label layoutX="23.0" layoutY="246.0" text="URL" />
                         <Button layoutX="313.0" layoutY="359.0" mnemonicParsing="false" onAction="#onBtnClickAbout" text="About LMSGrabber" />
-                        <Button layoutX="250.0" layoutY="359.0" mnemonicParsing="false" text="Settings" />
+                        <Button layoutX="250.0" layoutY="359.0" mnemonicParsing="false" text="Settings" onAction="#onBtnClickSettings" />
                         <Label layoutX="23.0" layoutY="216.0" text="LMS Type" />
                      </children>
                   </AnchorPane>
