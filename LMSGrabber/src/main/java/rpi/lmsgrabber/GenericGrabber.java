@@ -3,6 +3,7 @@ package rpi.lmsgrabber;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
 import io.ddavison.conductor.Locomotive;
@@ -13,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -49,7 +51,18 @@ public abstract class GenericGrabber {
       cl.previously_visited.add("https://lms.rpi.edu/webapps/login/?action=logout");
       cl.previously_visited.add("");
 
+      Random rand = new Random();
+
       while (!cl.to_visit.isEmpty()) {
+        try
+        {
+            TimeUnit.SECONDS.sleep(rand.nextInt(10) + 1);
+        }
+        catch(InterruptedException e)
+        {
+            Thread.currentThread().interrupt();
+        }
+
         try
         {
         String current = cl.to_visit.iterator().next(); // Current URL
