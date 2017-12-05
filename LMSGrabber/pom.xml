@@ -129,6 +129,22 @@
                             <platform>mac</platform>
                             <bit>32</bit>
                         </driver>
+
+                        <driver>
+                            <name>geckodriver</name>
+                            <platform>linux</platform>
+                            <bit>32</bit>
+                        </driver>
+                        <driver>
+                            <name>geckodriver</name>
+                            <platform>windows</platform>
+                            <bit>32</bit>
+                        </driver>
+                        <driver>
+                            <name>geckodriver</name>
+                            <platform>mac</platform>
+                            <bit>64</bit>
+                        </driver>
                     </drivers>
                 </configuration>
             </plugin>
@@ -138,7 +154,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
                     <execution>
-                        <id>Move Linux WebDriver</id>
+                        <id>Move Linux Chrome WebDriver</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>exec</goal>
@@ -149,7 +165,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>Move Mac WebDriver</id>
+                        <id>Move Mac Chrome WebDriver</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>exec</goal>
@@ -160,7 +176,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>Move Windows WebDriver</id>
+                        <id>Move Windows Chrome WebDriver</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>exec</goal>
@@ -168,6 +184,40 @@
                         <configuration>
                             <executable>cp</executable>
                             <commandlineArgs>${basedir}/drivers/chromedriver-windows-32bit.exe ${basedir}/chromedriver.exe</commandlineArgs>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>Move Linux Gecko WebDriver</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cp</executable>
+                            <commandlineArgs>${basedir}/drivers/geckodriver-linux-32bit ${basedir}/geckodriver.linux</commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Move Mac Gecko WebDriver</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cp</executable>
+                            <commandlineArgs>${basedir}/drivers/geckodriver-mac-64bit ${basedir}/geckodriver.mac</commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Move Windows Gecko WebDriver</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cp</executable>
+                            <commandlineArgs>${basedir}/drivers/geckodriver-windows-32bit.exe ${basedir}/geckodriver.exe</commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>
