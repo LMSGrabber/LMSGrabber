@@ -30,6 +30,11 @@ public class App extends Application {
       Scene scene = new Scene(rootLayout);
       primaryStage.setScene(scene);
       primaryStage.show();
+
+      SettingsWindow test = new SettingsWindow();
+//      Scene scene2 = new Scene(rootLayout);
+//      test.setScene(scene2);
+      test.show();
     } catch (IOException e) {
       logger.error("IOException", e);
     }
