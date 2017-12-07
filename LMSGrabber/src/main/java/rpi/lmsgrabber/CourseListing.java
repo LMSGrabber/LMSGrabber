@@ -35,6 +35,10 @@ class CourseListing extends GenericGrabber {
     return course_name;
   }
 
+  public String getIdentifier() {
+    return course_name;
+  }
+
   @Override
   public void grab() {
     // TODO Auto-generated method stub
