@@ -17,15 +17,15 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Slider layoutX="145.0" layoutY="47.0" showTickLabels="true" />
+                  <Slider fx:id="min_delay_slider" layoutX="145.0" layoutY="47.0" showTickLabels="true" />
                   <Label layoutX="23.0" layoutY="37.0" text="Politeness Delay" />
                   <TextField fx:id="input_proxy" layoutX="89.0" layoutY="136.0" />
                   <Label layoutX="51.0" layoutY="140.0" text="Proxy" />
-                  <Slider layoutX="314.0" layoutY="47.0" showTickLabels="true" />
+                  <Slider fx:id="max_delay_slider" layoutX="314.0" layoutY="47.0" showTickLabels="true" />
                   <Label layoutX="172.0" layoutY="77.0" text="Min (seconds)" />
                   <Label layoutX="314.0" layoutY="77.0" text="Max (seconds)" />
                   <Label layoutX="43.0" layoutY="201.0" text="Multithreaded" />
-                  <CheckBox layoutX="146.0" layoutY="201.0" mnemonicParsing="false" />
+                  <CheckBox fx:id="multithreaded_check" layoutX="146.0" layoutY="201.0" mnemonicParsing="false" />
                   <ButtonBar layoutX="386.0" layoutY="313.0" prefHeight="40.0" prefWidth="200.0">
                     <buttons>
                       <Button fx:id="settings_apply" mnemonicParsing="false" onAction="#onBtnClickApply" text="Apply" />
