@@ -13,7 +13,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.DialogPane;
 import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
@@ -44,23 +43,18 @@ public class SettingsWindow extends Stage {
 
   public SettingsWindow(Stage parent) throws IOException {
     super(StageStyle.UNDECORATED);
-//    super();
+    prefs = Preferences.userNodeForPackage(App.class);
+
     // Load root layout from fxml file.
     FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/settings_menu.fxml"));
 
     loader.setController(this);
 
-//    System.out.println(parent);
-
     this.initModality(Modality.WINDOW_MODAL);
     this.initOwner(parent);
     this.setAlwaysOnTop(true);
-//    System.out.println("Doing the thing");
 
     TabPane layout = loader.load();
-
-//    this.getScene().setRoot(layout);
-//    layout.setScene(this.getScene());
 
     Scene scene2 = new Scene(layout);
     this.setScene(scene2);
@@ -80,6 +74,11 @@ public class SettingsWindow extends Stage {
 
   @FXML
   void onBtnClickApply(ActionEvent event) {
-    System.out.println("Applying!");
+    prefs.putDouble("min_delay", min_delay_slider.getValue());
+    prefs.putDouble("max_delay", max_delay_slider.getValue());
+    prefs.put("proxy", input_proxy.getText());
+    prefs.putBoolean("multithreaded", multithreaded_check.isSelected());
+
+    this.close();
   }
 }

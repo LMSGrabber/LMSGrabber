@@ -86,7 +86,6 @@ public class LMSFxController {
   @FXML
   void onBtnClickSettings(ActionEvent event) {
     try {
-      System.out.println(this.parent);
       SettingsWindow test = new SettingsWindow(this.parent);
       test.show();
     } catch (IOException e) {

@@ -56,11 +56,11 @@ public abstract class GenericGrabber {
       while (!cl.to_visit.isEmpty()) {
         try
         {
-            TimeUnit.SECONDS.sleep(rand.nextInt(3) + 1);
+          TimeUnit.SECONDS.sleep(rand.nextInt(3) + 1);
         }
         catch(InterruptedException e)
         {
-            Thread.currentThread().interrupt();
+          Thread.currentThread().interrupt();
         }
 
         try
