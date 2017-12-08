@@ -29,6 +29,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import net.bytebuddy.description.type.TypeDescription.Generic;
 
 public class LMSFxController {
@@ -67,6 +68,12 @@ public class LMSFxController {
   @FXML // fx:id="cmb_lms_type_selector"
   private ComboBox<Class<? extends GenericGrabber>> cmb_lms_type_selector;
 
+  private Stage parent;
+
+  public void setParent(Stage parent) {
+    this.parent = parent;
+  }
+
   @FXML
   void onBtnClickAbout(ActionEvent event) {
     try {
@@ -78,7 +85,12 @@ public class LMSFxController {
 
   @FXML
   void onBtnClickSettings(ActionEvent event) {
-    //TODO
+    try {
+      SettingsWindow test = new SettingsWindow(this.parent);
+      test.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 
@@ -86,6 +98,7 @@ public class LMSFxController {
   void onBtnClickGrab(ActionEvent event) {
     for (final GenericGrabber grabber : data) {
       Thread thread = new Thread(new Runnable() {
+        @Override
         public void run() {
             grabber.grab();
         }
@@ -153,7 +166,7 @@ public class LMSFxController {
 
                     @Override
                     public Class<? extends GenericGrabber> fromString(String s) {
-                        return (Class<? extends GenericGrabber> ) null;
+                        return null;
                     }
 
                 });
@@ -167,7 +180,7 @@ public class LMSFxController {
 
             @Override
             public String toString(GenericGrabber object) {
-                return ((GenericGrabber) object).getIdentifier();
+                return object.getIdentifier();
             }
 
             @Override
