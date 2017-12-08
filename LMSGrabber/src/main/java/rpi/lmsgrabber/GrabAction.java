@@ -7,7 +7,8 @@ import io.ddavison.conductor.Browser;
 import io.ddavison.conductor.Config;
 import io.ddavison.conductor.Locomotive;
 
-@Config(browser = Browser.FIREFOX)
+// Note: Conductor 3.0.1 does not actually support Gecko
+@Config(browser = Browser.CHROME)
 public class GrabAction extends Locomotive {
 
   @Override

@@ -2,4 +2,5 @@
 .vscode
 drivers/
 chromedriver*
+geckodriver*
 LMSGrabber/geckodriver
