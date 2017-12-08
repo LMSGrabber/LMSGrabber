@@ -2,3 +2,4 @@
 .vscode
 drivers/
 chromedriver*
+LMSGrabber/geckodriver

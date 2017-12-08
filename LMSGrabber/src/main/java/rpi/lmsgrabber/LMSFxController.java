@@ -4,6 +4,11 @@
 
 package rpi.lmsgrabber;
 
+import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.util.Callback;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -70,13 +75,13 @@ public class LMSFxController {
       e.printStackTrace();
     }
   }
-  
+
   @FXML
   void onBtnClickSettings(ActionEvent event) {
     //TODO
   }
 
-  
+
   @FXML
   void onBtnClickGrab(ActionEvent event) {
     for (final GenericGrabber grabber : data) {
@@ -84,8 +89,8 @@ public class LMSFxController {
         public void run() {
             grabber.grab();
         }
-  
-      });  
+
+      });
       thread.start();
     }
   }
@@ -127,8 +132,53 @@ public class LMSFxController {
     // Set up combo box
     allowed_grabbers.add(BlackboardGrab.class);
     allowed_grabbers.add(PiazzaGrab.class);
+
+    //Force it to display shortened LMS names
+    cmb_lms_type_selector.setConverter(
+                new StringConverter<Class<? extends GenericGrabber>>() {
+                    @Override
+                    public String toString(Class<? extends GenericGrabber> grabby) {
+                        try {
+                        if (grabby == null) {
+                            return "";
+                        } else {
+                            return (grabby).newInstance().getIdentifier();
+                        }
+                      }
+                      catch(Exception e)
+                      {
+                        return "";
+                      }
+                    }
+
+                    @Override
+                    public Class<? extends GenericGrabber> fromString(String s) {
+                        return (Class<? extends GenericGrabber> ) null;
+                    }
+
+                });
+
     cmb_lms_type_selector.setItems(allowed_grabbers);
-    
+
+    treeoverview.setCellFactory(new Callback<TreeView<GenericGrabber>, TreeCell<GenericGrabber>>() {
+    @Override
+    public TreeCell<GenericGrabber> call(TreeView<GenericGrabber> p) {
+        return new TextFieldTreeCell<GenericGrabber>(new StringConverter<GenericGrabber>(){
+
+            @Override
+            public String toString(GenericGrabber object) {
+                return ((GenericGrabber) object).getIdentifier();
+            }
+
+            @Override
+            public GenericGrabber fromString(String string) {
+                return null;
+            }
+        });
+    }
+});
+
+
     treeoverview.setRoot(new TreeItem(null));
   }
 }
