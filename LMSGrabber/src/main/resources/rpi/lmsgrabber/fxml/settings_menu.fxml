@@ -28,7 +28,7 @@
                   <CheckBox layoutX="146.0" layoutY="201.0" mnemonicParsing="false" />
                   <ButtonBar layoutX="386.0" layoutY="313.0" prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                      <Button fx:id="settings_apply" mnemonicParsing="false" text="Apply" />
+                      <Button fx:id="settings_apply" mnemonicParsing="false" onAction="#onBtnClickApply" text="Apply" />
                         <Button fx:id="settings_cancel" mnemonicParsing="false" onAction="#onBtnClickCancel" text="Cancel" />
                     </buttons>
                   </ButtonBar>

@@ -58,4 +58,9 @@ public class SettingsWindow extends Stage {
   void onBtnClickCancel(ActionEvent event) {
     this.close();
   }
+
+  @FXML
+  void onBtnClickApply(ActionEvent event) {
+    System.out.println("Applying!");
+  }
 }
