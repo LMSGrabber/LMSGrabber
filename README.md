@@ -21,6 +21,7 @@ Inspired by the [Original Python version](https://github.com/slegec/LMS_Grabber)
 
 ```bash
 cd LMSGrabber
+mvn package
 mvn exec:java -D exec.mainClass=rpi.lmsgrabber.App
 ```
 
