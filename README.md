@@ -18,9 +18,12 @@ Inspired by the [Original Python version](https://github.com/slegec/LMS_Grabber)
 ## Compiling/Running
 
 ### Class Files ###
+Enter the following commands into a bash shell such as Windows Command Prompt to run LMSGrabber.
+You can obtain the path for LMSGrabber by navigating to the directory you extracted the repository into, and then navigating into the directory named LMSGrabber.
 
 ```bash
 cd LMSGrabber
+mvn package         (First time only)
 mvn exec:java -D exec.mainClass=rpi.lmsgrabber.App
 ```
 
