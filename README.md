@@ -21,6 +21,7 @@ Inspired by the [Original Python version](https://github.com/slegec/LMS_Grabber)
 
 ```bash
 cd LMSGrabber
+mvn package (Only need to run this once)
 mvn exec:java -D exec.mainClass=rpi.lmsgrabber.App
 ```
 
@@ -73,6 +74,8 @@ Add /path/to/geckodriver to the path variable
 (instructions [here](https://www.java.com/en/download/help/path.xml)). If you extracted
 the driver to the downloads folder and a 64-bit windows machine point the path to 
 C:\Users\userName\Downloads\geckodriver-v0.19.1-win64 for example.
+
+Once this is complete you can go the class files step
 
 ## Contributing ##
 
